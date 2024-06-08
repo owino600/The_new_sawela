@@ -3,7 +3,7 @@
 from datetime import datetime
 import inspect
 import models
-import pep8 as pycodestyle # type: ignore
+import pep8 as pycodestyle  # type: ignore
 import time
 import unittest
 from unittest import mock
