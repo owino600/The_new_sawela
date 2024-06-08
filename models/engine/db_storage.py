@@ -15,10 +15,10 @@ class DBStorage:
     """DBStorage class"""
     __engine = None
     __session = None
-    
+
     def __init__(self):
         """Initializes the DBStorage class"""
-        
+
         STORE_MYSQL_USER = getenv('STORE_MYSQL_USER')
         STORE_MYSQL_PWD = getenv('STORE_MYSQL_PWD')
         STORE_MYSQL_HOST = getenv('STORE_MYSQL_HOST')
@@ -44,11 +44,11 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
-    
+
     def new(self, obj):
         """Add the object to the current database session"""
         self.__session.add(obj)
-        
+
     def save(self):
         """Commit all changes of the current database session"""
         self.__session.commit()
@@ -67,11 +67,11 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session()
-        
+
     def close(self):
         """Close the current database session"""
         self.__session.remove()
-        
+
     def get(self, cls, id):
         """
         Get an object based on class name and its ID
@@ -79,7 +79,7 @@ class DBStorage:
         if cls not in classes:
             return None
         return self.__session.query(classes[cls]).get(id)
-    
+
     def count(self, cls=None):
         """
         Count the number of objects in storage
@@ -89,4 +89,3 @@ class DBStorage:
         if cls not in classes:
             return 0
         return len(self.all(cls))
-    
