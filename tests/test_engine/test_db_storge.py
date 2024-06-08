@@ -9,7 +9,7 @@ import models
 from models.engine import db_storage
 import json
 import os
-import pep8 # type: ignore
+import pep8
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {}
