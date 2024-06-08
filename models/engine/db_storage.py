@@ -5,19 +5,16 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from os import getenv
 from models.base_model import BaseModel
-#from models. import
-#from models. import
-#from models. import
-#from models. import
-#from models. import
-#from models. import
+
+
 Base = declarative_base()
 classes = {"BaseModel": BaseModel}
 class DBStorage:
     """DBStorage class"""
     __engine = None
     __session = None
-
+    
+    
     def __init__(self):
         """Initializes the DBStorage class"""
         
@@ -49,7 +46,7 @@ class DBStorage:
     def new(self, obj):
         """Add the object to the current database session"""
         self.__session.add(obj)
-
+        
     def save(self):
         """Commit all changes of the current database session"""
         self.__session.commit()
@@ -61,14 +58,18 @@ class DBStorage:
             self.save()
 
     def reload(self):
-        """Create all tables in the database (feature of SQLAlchemy) (WARNING: all classes who inherit from Base must be imported before calling Base.metadata.create_all(engine))"""
+        """Create all tables in the database (feature of SQLAlchemy)
+        (WARNING: all classes who inherit from Base must be imported
+        before calling Base.metadata.create_all(engine))"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session()
+        
     def close(self):
         """Close the current database session"""
         self.__session.remove()
+        
     def get(self, cls, id):
         """
         Get an object based on class name and its ID
@@ -76,6 +77,7 @@ class DBStorage:
         if cls not in classes:
             return None
         return self.__session.query(classes[cls]).get(id)
+    
     def count(self, cls=None):
         """
         Count the number of objects in storage
