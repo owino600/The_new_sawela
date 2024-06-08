@@ -10,6 +10,7 @@ from sqlalchemy import String, Column, DateTime
 
 Base = declarative_base()
 
+
 class BaseModel:
     """
     Class for the BaseModel
@@ -40,8 +41,6 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = self.created_at
-
-        
     def save(self):
         """
         Method to save the object
