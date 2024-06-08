@@ -43,7 +43,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = self.created_at
-    
+
     def save(self):
         """
         Method to save the object
@@ -51,7 +51,7 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
-        
+
     def to_dict(self):
         """Convert instance into dict format"""
         new_dict = self.__dict__.copy()
@@ -65,7 +65,7 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
-            
+
     def __str__(self):
         """
         String representation of the object
