@@ -13,12 +13,7 @@ from models.base_model import BaseModel
 #from models. import
 
 classes = {
-            'BaseModel': BaseModel,
-            '': 
-            '': 
-            '': 
-            '': 
-            '': 
+            'BaseModel': BaseModel, 
             }
 class FileStorage:
     """
