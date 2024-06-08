@@ -9,11 +9,12 @@ from models.base_model import BaseModel
 
 Base = declarative_base()
 classes = {"BaseModel": BaseModel}
+
+
 class DBStorage:
     """DBStorage class"""
     __engine = None
     __session = None
-    
     
     def __init__(self):
         """Initializes the DBStorage class"""
@@ -43,6 +44,7 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
+    
     def new(self, obj):
         """Add the object to the current database session"""
         self.__session.add(obj)
