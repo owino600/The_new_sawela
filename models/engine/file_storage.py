@@ -28,12 +28,19 @@ class FileStorage:
             '': 
             }
 
-    def all(self):
+    def all(self, cls=None):
         """
         Returns the dictionary __objects
         """
-        return FileStorage.__objects
-
+        if cls is not None:
+            if type(cls) == str:
+                cls = eval(cls)
+            cls_dict = {}
+            for k, v in self.__objects.items():
+                if type(v) == cls:
+                    cls_dict[k] = v
+            return cls_dict
+        return self.__objects
     def new(self, obj):
         """
         Sets in __objects the obj with key <obj class name>.id
@@ -76,3 +83,12 @@ class FileStorage:
                         FileStorage.__objects[key] = instance
                 except Exception:
                     pass
+    
+    def delete(self, obj=None):
+        """
+        Deletes obj from __objects if it’s inside
+        """
+        if obj is not None:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            if key in self.__objects:
+                del self.__objects[key]
