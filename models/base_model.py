@@ -42,24 +42,23 @@ class BaseModel:
         Method to save the object
         """
         self.updated_at = datetime.now()
+        models.storage.new(self)
         models.storage.save()
         
     def to_dict(self):
-        """
-        Method to convert the object to a dictionary
-        """
-        map_objects = {}
-        for key, value in self.__dict__.items():
-            if key == "created_at" or key == "updated_at":
-                map_objects[key] = value.isoformat()
-            else:
-                map_objects[key] = value
-                map_objects["__class__"] = self.__class__.__name__
-                return map_objects
+        """Convert instance into dict format"""
+        dictionary = {}
+        dictionary.update(self.__dict__)
+        dictionary.update({'__class__':
+                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()
+        return dictionary
             
     def __str__(self):
         """
         String representation of the object
         """
+        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         return "[{}] ({}) {}".format(self.__class__.__name__,
                                      self.id, self.__dict__)
