@@ -3,12 +3,9 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
-import json
-import os
 import pycodestyle
 import unittest
 
