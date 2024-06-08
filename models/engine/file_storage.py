@@ -3,20 +3,20 @@
 Module for serializing and deserializing data
 """
 import json
-import os
 from models.base_model import BaseModel
 
 
 classes = {
             'BaseModel': BaseModel, 
 }
+
+
 class FileStorage:
     """
     Class for serializing and deserializing data
     """
     __file_path = "file.json"
     __objects = {}
-    
     
     def all(self, cls=None):
         """
