@@ -3,10 +3,12 @@
 from datetime import datetime
 import inspect
 import models
-import pep8 as pycodestyle  # type: ignore
+import pycodestyle
 import time
 import unittest
 from unittest import mock
+
+
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
