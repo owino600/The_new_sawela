@@ -5,12 +5,7 @@ Module for serializing and deserializing data
 import json
 import os
 from models.base_model import BaseModel
-#from models. import
-#from models. import
-#from models. import
-#from models. import
-#from models. import
-#from models. import
+
 
 classes = {
             'BaseModel': BaseModel, 
@@ -56,7 +51,9 @@ class FileStorage:
             
     def reload(self):
         """
-        Deserializes the JSON file to __objects (only if the JSON file (__file_path) exists ; otherwise, do nothing.
+        Deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists;
+        otherwise, do nothing.
         If the file doesn’t exist, no exception should be raised)
         """
         try:
@@ -79,6 +76,7 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+        
     def get(self, cls, id):
         """Retrieve one object"""
         if cls not in classes:
