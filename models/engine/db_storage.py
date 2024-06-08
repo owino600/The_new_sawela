@@ -27,12 +27,13 @@ class DBStorage:
         STORE_MYSQL_DB = getenv('STORE_MYSQL_DB')
         STORE_ENV = getenv('HBNB_ENV')
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(
-            getenv("STORE_MYSQL_USER"),
-            getenv("STOREMYSQL_PWD"),
-            getenv("STORE_MYSQL_HOST"),
-            getenv("STORE_MYSQL_DB")),
+            STORE_MYSQL_USER,
+            STORE_MYSQL_PWD,
+            STORE_MYSQL_HOST,
+            STORE_MYSQL_DB
+            ),
                                       pool_pre_ping=True)
-        if getenv("STORE_ENV") == "test":
+        if STORE_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -65,12 +66,9 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session()
-        return self.__session
     def close(self):
         """Close the current database session"""
         self.__session.remove()
-        self.__engine.dispose()
-        return self.__session
     def get(self, cls, id):
         """
         Get an object based on class name and its ID
