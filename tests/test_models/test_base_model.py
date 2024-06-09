@@ -89,7 +89,7 @@ class TestBaseModel(unittest.TestCase):
         inst1 = BaseModel()
         toc = datetime.now()
         self.assertTrue(tic - timedelta(
-            seconds = 1) <= inst1.created_at <= toc + timedelta(seconds = 1))
+            seconds=1) <= inst1.created_at <= toc + timedelta(seconds=1))
         time.sleep(1.1)
         inst2 = BaseModel()
         self.assertTrue(inst1.created_at != inst2.created_at)
