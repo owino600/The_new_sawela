@@ -6,7 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 import inspect
 import models
 from models.engine import db_storage
-import pycodestyle # type: ignore
+import pycodestyle  # type: ignore
 import unittest
 
 
