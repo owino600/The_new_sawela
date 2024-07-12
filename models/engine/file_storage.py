@@ -4,9 +4,15 @@ Module for serializing and deserializing data
 """
 import json
 from models.base_model import BaseModel
+from models.inventory import Inventory
+from models.stock_received import StockReceived
+from models.stock_issued import StockIssued
 
 classes = {
-    'BaseModel': BaseModel
+    'BaseModel': BaseModel,
+    'Inventory': Inventory,
+    'StockReceived': StockReceived,
+    'StockIssued': StockIssued
 }
 
 class FileStorage:

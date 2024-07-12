@@ -6,9 +6,16 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from os import getenv
 from models.base_model import BaseModel
+from models.inventory import Inventory
+from models.stock_received import StockReceived
+from models.stock_issued import StockIssued
+
 
 Base = declarative_base()
-classes = {"BaseModel": BaseModel}
+classes = {"BaseModel": BaseModel,
+           "Inventory": Inventory,
+           "StockReceived": StockReceived,
+           "StockIssued": StockIssued}
 
 class DBStorage:
     """DBStorage class"""
