@@ -4,20 +4,18 @@ Module for the class BaseModel
 """
 import uuid
 from datetime import datetime
-import models
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import String, Column, DateTime
 
 Base = declarative_base()
 
-
 class BaseModel:
     """
     Class for the BaseModel
     """
-    id = Column(String(60), nullable=False, primary_key=True)
-    created_at = Column(DateTime(60), nullable=False)
-    updated_at = Column(DateTime(60), nullable=False)
+    id = Column(String(60), nullable=False, primary_key=True, default=lambda: str(uuid.uuid4()))
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):
         """
@@ -48,12 +46,14 @@ class BaseModel:
         """
         Method to save the object
         """
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """Convert instance into dict format"""
+        """
+        Convert instance into dict format
+        """
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(
@@ -70,5 +70,4 @@ class BaseModel:
         """
         String representation of the object
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__,
-                                     self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
