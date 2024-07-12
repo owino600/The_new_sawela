@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestFileStorageDocs classes
+Contains the TestFileStorageDocs and TestFileStorage classes
 """
 
 import inspect
@@ -10,6 +10,7 @@ import json
 from models.base_model import BaseModel
 import pycodestyle  # type: ignore
 import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"BaseModel": BaseModel}
 
@@ -31,10 +32,9 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pycodestyle.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
-        self.assertEqual(
-            result.total_errors, 0, "Found code style errors (and warnings).")
+        result = pep8s.check_files(['tests/test_models/test_engine/test_file_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_file_storage_module_docstring(self):
         """Test for the file_storage.py module docstring"""
@@ -71,7 +71,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
-        """test that new adds an object to the FileStorage.__objects attr"""
+        """Test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
@@ -104,3 +104,31 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_reload(self):
+        """Test that reload properly loads objects from file.json"""
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        test_dict = {
+            "BaseModel.1234": BaseModel(id="1234", created_at="2023-07-11T00:00:00.000000", updated_at="2023-07-11T00:00:00.000000")
+        }
+        with open("file.json", "w") as f:
+            json.dump({k: v.to_dict() for k, v in test_dict.items()}, f)
+        storage.reload()
+        self.assertEqual(test_dict, storage.all())
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_delete(self):
+        """Test that delete removes objects from __objects"""
+        storage = FileStorage()
+        instance = BaseModel()
+        instance_key = instance.__class__.__name__ + "." + instance.id
+        storage.new(instance)
+        storage.save()
+        self.assertIn(instance_key, storage.all())
+        storage.delete(instance)
+        self.assertNotIn(instance_key, storage.all())
+
