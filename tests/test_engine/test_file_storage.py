@@ -33,8 +33,8 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(
-                ['tests/test_models/test_engine/test_file_storage.py']
-                )
+            ['tests/test_models/test_engine/test_file_storage.py']
+        )
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -117,7 +117,7 @@ class TestFileStorage(unittest.TestCase):
             "BaseModel.1234": BaseModel(
                 id="1234", created_at="2023-07-11T00:00:00.0000",
                 updated_at="2023-07-11T00:00:00.0000"
-                )
+            )
         }
         with open("file.json", "w") as f:
             json.dump({k: v.to_dict() for k, v in test_dict.items()}, f)
