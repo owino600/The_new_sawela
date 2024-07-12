@@ -32,7 +32,9 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pycodestyle.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/test_file_storage.py'])
+        result = pep8s.check_files(
+                ['tests/test_models/test_engine/test_file_storage.py']
+                )
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -112,7 +114,10 @@ class TestFileStorage(unittest.TestCase):
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
         test_dict = {
-            "BaseModel.1234": BaseModel(id="1234", created_at="2023-07-11T00:00:00.000000", updated_at="2023-07-11T00:00:00.000000")
+            "BaseModel.1234": BaseModel(
+                id="1234", created_at="2023-07-11T00:00:00.0000",
+                updated_at="2023-07-11T00:00:00.0000"
+                )
         }
         with open("file.json", "w") as f:
             json.dump({k: v.to_dict() for k, v in test_dict.items()}, f)
@@ -131,4 +136,3 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(instance_key, storage.all())
         storage.delete(instance)
         self.assertNotIn(instance_key, storage.all())
-
