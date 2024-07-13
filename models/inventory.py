@@ -3,12 +3,12 @@
 Defines the Inventory class
 """
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, DateTime, Float, Text
 from datetime import datetime
 
 
-class Inventory(BaseModel):
+class Inventory(BaseModel, Base):
     """Represents inventory of items"""
     __tablename__ = 'inventory'
     item = Column(String(60), nullable=False)

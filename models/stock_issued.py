@@ -3,12 +3,12 @@
 Defines the StockIssued class
 """
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, DateTime
 from datetime import datetime
 
 
-class StockIssued(BaseModel):
+class StockIssued(BaseModel, Base):
     """Represents issued stock"""
     __tablename__ = 'stock_issued'
     item = Column(String(60), nullable=False)

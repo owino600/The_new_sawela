@@ -3,12 +3,12 @@
 Defines the StockReceived class
 """
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, DateTime
 from datetime import datetime
 
 
-class StockReceived(BaseModel):
+class StockReceived(BaseModel, Base):
     """Represents received stock"""
     __tablename__ = 'stock_received'
     item = Column(String(60), nullable=False)
