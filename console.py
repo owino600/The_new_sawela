@@ -5,6 +5,7 @@ from models import storage
 from models.inventory import Inventory
 from models.stock_received import StockReceived
 from models.stock_issued import StockIssued
+from datetime import datetime 
 
 class StoreMgmtCommand(cmd.Cmd):
     prompt = "(store_mgmt) "
